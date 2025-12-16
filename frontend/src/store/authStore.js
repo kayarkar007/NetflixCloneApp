@@ -8,8 +8,8 @@ export const useAuthStore = create()(
       token: null,
       isAuthenticated: false,
       isLoading: false,
-      
-      login: (user: User, token: string) => {
+
+      login: (user, token) => {
         set({
           user,
           token,
@@ -17,7 +17,7 @@ export const useAuthStore = create()(
           isLoading: false,
         });
       },
-      
+
       logout: () => {
         set({
           user: null,
@@ -26,16 +26,16 @@ export const useAuthStore = create()(
           isLoading: false,
         });
       },
-      
-      setLoading: (loading: boolean) => {
+
+      setLoading: (loading) => {
         set({ isLoading: loading });
       },
-      
-      updateUser: (userData: Partial<User>) => {
+
+      updateUser: (userData) => {
         const currentUser = get().user;
         if (currentUser) {
           set({
-            user: { ...currentUser, ...userData }
+            user: { ...currentUser, ...userData },
           });
         }
       },

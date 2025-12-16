@@ -17,9 +17,19 @@ const PORT = process.env.PORT || 5000;
 
 // Security middleware
 app.use(helmet());
+// Allow requests from the deployed frontend or common dev origins (3000 for CRA, 5173 for Vite)
+const allowedOrigins = [process.env.CLIENT_URL, 'http://localhost:3000', 'http://localhost:5173'].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS policy: Origin not allowed'), false);
+  },
+  credentials: true,
 }));
 
 // Rate limiting

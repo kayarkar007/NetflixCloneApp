@@ -1,15 +1,13 @@
-// Compatibility shim — no-op TypeScript shim pointing to JSX App
-export default null;
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Browse from './pages/Browse';
-import MovieDetail from './pages/MovieDetail';
-import Profile from './pages/Profile';
+import Navbar from './components/Navbar.jsx';
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import Browse from './pages/Browse.jsx';
+import MovieDetail from './pages/MovieDetail.jsx';
+import Profile from './pages/Profile.jsx';
 import { useAuthStore } from './store/authStore';
 import './App.css';
 
