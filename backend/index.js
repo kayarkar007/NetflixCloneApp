@@ -60,10 +60,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/netflix-clone', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/netflix-clone', {})
 .then(() => {
   console.log('Connected to MongoDB');
   app.listen(PORT, () => {
