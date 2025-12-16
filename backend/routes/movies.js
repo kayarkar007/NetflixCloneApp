@@ -250,9 +250,13 @@ router.get('/recommendations', auth, async (req, res) => {
     const user = await User.findById(req.user.userId)
       .populate('watchHistory.movie', 'genres');
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     // Get user's preferred genres from watch history
     const genreCounts = {};
-    user.watchHistory.forEach(history => {
+    (user.watchHistory || []).forEach(history => {
       if (history.movie && history.movie.genres) {
         history.movie.genres.forEach(genre => {
           genreCounts[genre] = (genreCounts[genre] || 0) + 1;

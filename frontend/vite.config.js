@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     // proxy API requests to backend to preserve CRA `proxy` behavior
     proxy: {
-      '/api': 'http://localhost:5001',
+      '/api': 'http://localhost:5000',
     },
   },
 })
