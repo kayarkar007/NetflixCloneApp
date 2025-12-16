@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Use Vite env variable; fallback to `/api` for same-origin deployments
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// Use Vite env variable; fallback to deployed backend to avoid 404s when env is missing
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://netflixcloneapp-1ehr.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
