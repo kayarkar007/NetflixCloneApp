@@ -10,6 +10,9 @@ const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/users');
 
 const app = express();
+// If running behind a proxy (e.g., Docker, reverse proxy), trust proxy headers
+// Only trust loopback proxy headers in development to avoid allowing external spoofing
+app.set('trust proxy', 'loopback');
 const PORT = process.env.PORT || 5000;
 
 // Security middleware
@@ -59,4 +62,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/netflix-c
 })
 .catch((err) => {
   console.error('MongoDB connection error:', err);
+  console.warn('Starting server without a database connection (development only).');
+  // Start the server anyway so frontend and non-db routes can be tested during development.
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} (no DB connection)`);
+  });
 });

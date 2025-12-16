@@ -1,12 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
+const dbCheck = require('../middleware/dbCheck');
 
 const router = express.Router();
 
 // Register new user
-router.post('/register', async (req, res) => {
+router.post('/register', dbCheck, async (req, res) => {
   try {
     const { email, password, username } = req.body;
 
@@ -53,7 +55,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post('/login', async (req, res) => {
+router.post('/login', dbCheck, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -92,7 +94,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Get current user profile
-router.get('/profile', auth, async (req, res) => {
+router.get('/profile', auth, dbCheck, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId)
       .select('-password')
@@ -110,7 +112,7 @@ router.get('/profile', auth, async (req, res) => {
 });
 
 // Update user profile
-router.put('/profile', auth, async (req, res) => {
+router.put('/profile', auth, dbCheck, async (req, res) => {
   try {
     const { username, profilePicture, subscription } = req.body;
     
@@ -140,7 +142,7 @@ router.put('/profile', auth, async (req, res) => {
 });
 
 // Change password
-router.put('/change-password', auth, async (req, res) => {
+router.put('/change-password', auth, dbCheck, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 

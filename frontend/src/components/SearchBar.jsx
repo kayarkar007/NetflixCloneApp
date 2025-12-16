@@ -13,17 +13,7 @@ const SearchBar = ({
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  // Mock suggestions - in a real app, these would come from an API
-  const mockSuggestions = [
-    'Action movies',
-    'Comedy shows',
-    'Drama series',
-    'Horror films',
-    'Romance movies',
-    'Sci-fi series',
-    'Thriller movies',
-    'Documentaries'
-  ];
+  // mockSuggestions moved to module scope below
 
   useEffect(() => {
     if (query.trim()) {
@@ -36,7 +26,7 @@ const SearchBar = ({
     }
   }, [query]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (query.trim()) {
       if (onSearch) {
@@ -172,3 +162,15 @@ const SearchBar = ({
 };
 
 export default SearchBar;
+
+// Module-scope mock suggestions to avoid recreating array and to satisfy eslint hook dependency
+const mockSuggestions = [
+  'Action movies',
+  'Comedy shows',
+  'Drama series',
+  'Horror films',
+  'Romance movies',
+  'Sci-fi series',
+  'Thriller movies',
+  'Documentaries'
+];
